@@ -1,0 +1,58 @@
+---
+const { title, emoji } = Astro.props;
+---
+
+<div class="card">
+    <div class="card-header">
+        <span class="emoji">{emoji}</span>
+        <h3>{title}</h3>
+    </div>
+
+    <p>
+        <slot />
+    </p>
+</div>
+
+<style>
+.card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 16px;
+
+    padding: 1.5rem;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    border-color: #58a6ff;
+
+    box-shadow:
+        0 10px 30px rgba(88,166,255,.15);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+
+    margin-bottom: .75rem;
+}
+
+.card h3 {
+    margin: 0;
+}
+
+.emoji {
+    font-size: 2rem;
+}
+
+.card p {
+    margin: 0;
+    color: #c9d1d9;
+}
+</style>

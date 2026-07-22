@@ -1,0 +1,25 @@
+---
+const { color = "#30363d", text } = Astro.props;
+---
+
+<span class="badge" style={`--badge-color: ${color}`}>
+  {text}
+</span>
+
+<style>
+.badge {
+    display: inline-block;
+    padding: .35rem .8rem;
+    margin: .25rem;
+
+    background: var(--badge-color);
+
+    border-radius: 999px;
+
+    font-family: "Fredoka", sans-serif;
+    font-size: .85rem;
+    font-weight: 600;
+
+    color: white;
+}
+</style>

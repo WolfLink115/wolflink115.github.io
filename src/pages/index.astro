@@ -1,0 +1,124 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Badge from "../components/Badge.astro";
+import Card from "../components/Card.astro";
+import Navbar from "../components/Navbar.astro";
+import HomelabStatus from "../components/HomelabStatus.astro";
+---
+
+<Layout title="WolfLink115">
+
+<main>
+
+<Navbar />
+
+<div class="hero">
+
+    <img src="/avatar.png" alt="WolfLink115" class="avatar" />
+
+    <h1>Heya goobers, I'm WolfLink115! 🐺</h1>
+
+    <p class="subtitle">
+        Welcome to my little corner of the internet.
+    </p>
+
+</div>
+
+<div class="badges">
+
+<Badge color="#30363d" text="🐧 Linux Lover" />
+<Badge color="#0969da" text="🐳 Docker Enjoyer" />
+<Badge color="#6f42c1" text="☁ Homelab" />
+<Badge color="#2ea043" text="💻 Surface Pro 6" />
+<Badge color="#da3633" text="🔥 Breaking Things" />
+<Badge color="#8250df" text="🐺 Am WOOF!!!" />
+
+</div>
+
+<HomelabStatus />
+
+<p>
+I'm mostly just a nerd who enjoys taking things apart to figure out how they work...
+and occasionally putting them back together again.
+</p>
+
+<hr>
+
+<h2>Things I have been messing with as of recent</h2>
+
+<div class="grid">
+
+<Card emoji="🐧" title="Linux">
+Learning Linux has become one of my favorite hobbies.
+</Card>
+
+<Card emoji="🐳" title="Docker">
+Running nearly everything in containers these days.
+</Card>
+
+<Card emoji="☁️" title="Self-hosting">
+Building my own little corner of the internet.
+</Card>
+
+<Card emoji="📸" title="Immich">
+My replacement for Google Photos.
+</Card>
+
+<Card emoji="🎬" title="Jellyfin">
+Movies, TV shows, and music without subscriptions.
+</Card>
+
+<Card emoji="🔍" title="SearXNG">
+Privacy-friendly search is awesome.
+</Card>
+
+</div>
+
+<p>
+Lately I've been building out my own homelab (running an entire server on this dingy
+$95 Surface Pro 6 I bought off Marketplace lmao), trying to learn about porting UEFI
+to old devices, etc.
+</p>
+
+<hr>
+
+<h2>Current projects</h2>
+
+<ul>
+  <li>Building my homelab</li>
+  <li>Random Linux experiments on old phones I have laying around lol</li>
+  <li>Trying to find stability, privacy, and security in all that I do.</li>
+</ul>
+
+<hr>
+
+<h2>Hobbies?</h2>
+
+<ul>
+  <li>Playing games (though, not that many. VRChat, Beat Saber, and The Legend of Zelda are really the only games I enjoy playing)</li>
+  <li>Tinkering with old devices.</li>
+  <li>Being a fluffy woofer.</li>
+  <li>Existing (does that count as a hobby?)</li>
+</ul>
+
+<hr>
+
+<h2>A singular fun fact about me</h2>
+
+<p><strong>Am WOOF!!!</strong></p>
+
+<hr>
+
+<h2>Oh, and here is my website lol</h2>
+
+<p>
+🌐 <a href="https://www.wolflink115.com">www.wolflink115.com</a>
+</p>
+
+<p>
+If one of my services isn't responding, there's a good chance my Surface is asleep,
+powered off, or I'm busy breaking—I mean <em>improving</em>—something.
+</p>
+
+</main>
+</Layout>

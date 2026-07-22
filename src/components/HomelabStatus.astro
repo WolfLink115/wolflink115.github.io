@@ -1,0 +1,133 @@
+<section class="status">
+    <h2>🐺 Wolf's Homelab</h2>
+
+    <p id="summary" class="summary">
+        Loading homelab status...
+    </p>
+
+    <div id="services" class="services"></div>
+
+    <p class="details">
+        <a href="https://status.wolflink115.com">
+            View detailed status →
+        </a>
+    </p>
+</section>
+
+<script>
+const STATUS_URL = "https://status.wolflink115.com";
+
+const icons = {
+    "Homepage": "🏠",
+    "Immich": "📸",
+    "Jellyfin": "🎬",
+    "Home Assistant": "🏡",
+    "SearXNG": "🔍",
+    "Syncthing": "📂",
+    "Portainer": "🐳",
+    "Vaultwarden": "🛡️",
+    "Invidious": "🎥",
+};
+
+async function updateStatus() {
+    try {
+        const [statusRes, heartbeatRes] = await Promise.all([
+            fetch(`${STATUS_URL}/api/status-page/status`),
+            fetch(`${STATUS_URL}/api/status-page/heartbeat/status`)
+        ]);
+
+        const statusData = await statusRes.json();
+        const heartbeatData = await heartbeatRes.json();
+
+        const services = document.getElementById("services");
+        const summary = document.getElementById("summary");
+
+        services.innerHTML = "";
+
+        let online = 0;
+        let total = 0;
+
+        for (const group of statusData.publicGroupList) {
+            for (const monitor of group.monitorList) {
+
+                total++;
+
+                const latest =
+                    heartbeatData.heartbeatList[monitor.id]?.at(-1);
+
+                const isOnline = latest?.status === 1;
+
+                if (isOnline) online++;
+
+                services.innerHTML += `
+                    <div class="service">
+                        <span>
+                            ${icons[monitor.name] ?? "🖥️"}
+                            ${monitor.name}
+                        </span>
+
+                        <span class="${isOnline ? "online" : "offline"}">
+                            ${isOnline ? "🟢 Online" : "🔴 Offline"}
+                        </span>
+                    </div>
+                `;
+            }
+        }
+
+        summary.textContent = `${online} / ${total} services online`;
+
+    } catch (err) {
+
+        document.getElementById("summary").textContent =
+            "Couldn't reach the homelab right now.";
+
+        console.error(err);
+    }
+}
+
+updateStatus();
+
+setInterval(updateStatus, 60000);
+</script>
+
+<style>
+.status {
+    margin: 3rem 0;
+    padding: 2rem;
+    border-radius: 18px;
+    background: #161b22;
+    border: 1px solid #30363d;
+}
+
+.summary {
+    color: #8b949e;
+    margin-bottom: 1.5rem;
+}
+
+.services {
+    display: grid;
+    gap: .75rem;
+}
+
+.service {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .85rem 1rem;
+    border-radius: 10px;
+    background: #0d1117;
+}
+
+.online {
+    color: #3fb950;
+}
+
+.offline {
+    color: #f85149;
+}
+
+.details {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+</style>
