@@ -36,7 +36,21 @@ export async function onRequestGet() {
                     checked: latest?.time ?? null,
                 };
             })
-            .sort((a, b) => a.name.localeCompare(b.name));
+            const ORDER = [
+                "Homepage",
+                "Immich",
+                "Jellyfin",
+                "SearXNG",
+                "Home Assistant",
+                "Portainer",
+                "Syncthing",
+                "Vaultwarden",
+                "Invidious",
+            ];
+
+            services.sort(
+                (a, b) => ORDER.indexOf(a.name) - ORDER.indexOf(b.name)
+            );
 
         const online = services.filter(s => s.online).length;
 

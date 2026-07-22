@@ -1,81 +1,82 @@
----
-const response = await fetch("/api/homelab");
-
-let data = null;
-
-try {
-    data = await response.json();
-} catch {
-    data = { error: true };
-}
----
-
 <section class="status">
 
-<h2>🐺 Wolf's Homelab</h2>
+    <h2>🐺 Wolf's Homelab</h2>
 
-{
-data.error ? (
+    <p id="summary" class="summary">
+        Checking on the floofy server...
+    </p>
 
-<>
-<p>Couldn't reach the homelab right now.</p>
+    <div id="services" class="services"></div>
 
-<p class="details">
-<a href="https://status.wolflink115.com/status/status">
-View detailed status →
-</a>
-</p>
-</>
-
-) : (
-
-<>
-
-<p class="summary">
-{data.online} / {data.total} services online
-</p>
-
-<div class="services">
-
-{
-data.services.map(service => (
-
-<div class="service">
-
-<span>
-{service.emoji} {service.name}
-</span>
-
-<span class={service.online ? "online" : "offline"}>
-
-{
-service.online
-? `🟢 ${service.ping} ms`
-: "🔴 Offline"
-}
-
-</span>
-
-</div>
-
-))
-}
-
-</div>
-
-<p class="details">
-<a href="https://status.wolflink115.com/status/status">
-View detailed status →
-</a>
-</p>
-
-</>
-
-)
-
-}
+    <p class="details">
+        <a href="https://status.wolflink115.com/status/status">
+            View detailed status →
+        </a>
+    </p>
 
 </section>
+
+<script>
+const summary = document.getElementById("summary");
+const services = document.getElementById("services");
+
+const ORDER = [
+    "Homepage",
+    "Immich",
+    "Jellyfin",
+    "SearXNG",
+    "Home Assistant",
+    "Portainer",
+    "Syncthing",
+    "Vaultwarden",
+    "Invidious",
+];
+
+fetch("/api/homelab")
+    .then(r => r.json())
+    .then(data => {
+
+        if (data.error) {
+            throw new Error(data.message ?? "Offline");
+        }
+
+        data.services.sort(
+            (a, b) => ORDER.indexOf(a.name) - ORDER.indexOf(b.name)
+        );
+
+        summary.textContent =
+            `${data.online} / ${data.total} services online`;
+
+        services.innerHTML = "";
+
+        for (const service of data.services) {
+
+            const div = document.createElement("div");
+            div.className = "service";
+
+            div.innerHTML = `
+                <span>${service.emoji} ${service.name}</span>
+                <span class="${service.online ? "online" : "offline"}">
+                    ${
+                        service.online
+                        ? `🟢 ${service.ping} ms`
+                        : "🔴 Offline"
+                    }
+                </span>
+            `;
+
+            services.appendChild(div);
+
+        }
+
+    })
+    .catch(() => {
+
+        summary.textContent =
+            "Couldn't reach the homelab right now.";
+
+    });
+</script>
 
 <style>
 .status {
@@ -100,9 +101,9 @@ View detailed status →
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #0d1117;
     padding: .85rem 1rem;
     border-radius: 10px;
+    background: #0d1117;
 }
 
 .online {
