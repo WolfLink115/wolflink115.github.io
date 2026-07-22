@@ -1,0 +1,82 @@
+{
+  "generated": "2026-07-22T01:05:15.964Z",
+  "surfaceOnline": true,
+  "summary": {
+    "online": 9,
+    "total": 9
+  },
+  "services": [
+    {
+      "id": 1,
+      "name": "Homepage",
+      "emoji": "🏠",
+      "online": true,
+      "ping": 120,
+      "checked": "2026-07-22 01:05:00.954"
+    },
+    {
+      "id": 4,
+      "name": "Immich",
+      "emoji": "📸",
+      "online": true,
+      "ping": 74,
+      "checked": "2026-07-22 01:04:14.731"
+    },
+    {
+      "id": 3,
+      "name": "Jellyfin",
+      "emoji": "🎬",
+      "online": true,
+      "ping": 169,
+      "checked": "2026-07-22 01:04:54.830"
+    },
+    {
+      "id": 2,
+      "name": "SearXNG",
+      "emoji": "🔍",
+      "online": true,
+      "ping": 106,
+      "checked": "2026-07-22 01:04:19.154"
+    },
+    {
+      "id": 6,
+      "name": "Home Assistant",
+      "emoji": "🏡",
+      "online": true,
+      "ping": 68,
+      "checked": "2026-07-22 01:04:59.287"
+    },
+    {
+      "id": 7,
+      "name": "Portainer",
+      "emoji": "🐳",
+      "online": true,
+      "ping": 78,
+      "checked": "2026-07-22 01:04:16.317"
+    },
+    {
+      "id": 8,
+      "name": "Syncthing",
+      "emoji": "📂",
+      "online": true,
+      "ping": 743,
+      "checked": "2026-07-22 01:04:34.936"
+    },
+    {
+      "id": 5,
+      "name": "Vaultwarden",
+      "emoji": "🛡️",
+      "online": true,
+      "ping": 76,
+      "checked": "2026-07-22 01:04:39.240"
+    },
+    {
+      "id": 9,
+      "name": "Invidious",
+      "emoji": "🎥",
+      "online": true,
+      "ping": 132,
+      "checked": "2026-07-22 01:04:53.125"
+    }
+  ]
+}
