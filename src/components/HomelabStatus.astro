@@ -1,94 +1,81 @@
+---
+const response = await fetch("/api/homelab");
+
+let data = null;
+
+try {
+    data = await response.json();
+} catch {
+    data = { error: true };
+}
+---
+
 <section class="status">
-    <h2>🐺 Wolf's Homelab</h2>
 
-    <p id="summary" class="summary">
-        Loading homelab status...
-    </p>
+<h2>🐺 Wolf's Homelab</h2>
 
-    <div id="services" class="services"></div>
+{
+data.error ? (
 
-    <p class="details">
-        <a href="https://status.wolflink115.com">
-            View detailed status →
-        </a>
-    </p>
-</section>
+<>
+<p>Couldn't reach the homelab right now.</p>
 
-<script>
-const STATUS_URL = "https://status.wolflink115.com";
+<p class="details">
+<a href="https://status.wolflink115.com/status/status">
+View detailed status →
+</a>
+</p>
+</>
 
-const icons = {
-    "Homepage": "🏠",
-    "Immich": "📸",
-    "Jellyfin": "🎬",
-    "Home Assistant": "🏡",
-    "SearXNG": "🔍",
-    "Syncthing": "📂",
-    "Portainer": "🐳",
-    "Vaultwarden": "🛡️",
-    "Invidious": "🎥",
-};
+) : (
 
-async function updateStatus() {
-    try {
-        const [statusRes, heartbeatRes] = await Promise.all([
-            fetch(`${STATUS_URL}/api/status-page/status`),
-            fetch(`${STATUS_URL}/api/status-page/heartbeat/status`)
-        ]);
+<>
 
-        const statusData = await statusRes.json();
-        const heartbeatData = await heartbeatRes.json();
+<p class="summary">
+{data.online} / {data.total} services online
+</p>
 
-        const services = document.getElementById("services");
-        const summary = document.getElementById("summary");
+<div class="services">
 
-        services.innerHTML = "";
+{
+data.services.map(service => (
 
-        let online = 0;
-        let total = 0;
+<div class="service">
 
-        for (const group of statusData.publicGroupList) {
-            for (const monitor of group.monitorList) {
+<span>
+{service.emoji} {service.name}
+</span>
 
-                total++;
+<span class={service.online ? "online" : "offline"}>
 
-                const latest =
-                    heartbeatData.heartbeatList[monitor.id]?.at(-1);
-
-                const isOnline = latest?.status === 1;
-
-                if (isOnline) online++;
-
-                services.innerHTML += `
-                    <div class="service">
-                        <span>
-                            ${icons[monitor.name] ?? "🖥️"}
-                            ${monitor.name}
-                        </span>
-
-                        <span class="${isOnline ? "online" : "offline"}">
-                            ${isOnline ? "🟢 Online" : "🔴 Offline"}
-                        </span>
-                    </div>
-                `;
-            }
-        }
-
-        summary.textContent = `${online} / ${total} services online`;
-
-    } catch (err) {
-
-        document.getElementById("summary").textContent =
-            "Couldn't reach the homelab right now.";
-
-        console.error(err);
-    }
+{
+service.online
+? `🟢 ${service.ping} ms`
+: "🔴 Offline"
 }
 
-updateStatus();
+</span>
 
-setInterval(updateStatus, 60000);
-</script>
+</div>
+
+))
+}
+
+</div>
+
+<p class="details">
+<a href="https://status.wolflink115.com/status/status">
+View detailed status →
+</a>
+</p>
+
+</>
+
+)
+
+}
+
+</section>
 
 <style>
 .status {
@@ -113,9 +100,9 @@ setInterval(updateStatus, 60000);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: #0d1117;
     padding: .85rem 1rem;
     border-radius: 10px;
-    background: #0d1117;
 }
 
 .online {
